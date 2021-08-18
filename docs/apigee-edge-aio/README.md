@@ -12,25 +12,6 @@ This docker image contains latest Apigee Edge all-in-one. The components - API S
 - **Docker Settings** : Ensure your docker preferences have at least **CPUs: 2 and Memory: 6 GB**
 
 ### Running Docker Container
-#### Step 0: Login to docker registery
-Login with **software.apigee.com** (NOT docker!) credentials.
-
-```md
-docker login docker.apigee.net
-```
-
-#### Step 1: Pull the image. Specify version if you want to pull a specific version. 
-```md 
-docker pull docker.apigee.net/apigee-edge-aio
-docker pull docker.apigee.net/apigee-edge-aio:4.19.06
-
-```
-To pull older version of  edge 
-```md 
-docker pull docker.apigee.net/apigee-edge-aio:4.19.01
-docker pull docker.apigee.net/apigee-edge-aio:4.18.01
-docker pull docker.apigee.net/apigee-edge-aio:4.17.09
-```
 
 #### Step 2: Create  container
 ```md

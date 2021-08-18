@@ -17,7 +17,7 @@ https://www.docker.com/products/docker-toolbox
   - This will create a docker image ```apigee-edge-aio```. You can do ```docker images -a``` to list all the docker images.
 
 ### How to Run
-More details [here](./docs/README.md).
+More details [here](./docs/apigee-edge-aio/README.md).
 
 
 ### License
