@@ -1,0 +1,31 @@
+################################################################################
+##
+##  Purpose: Provide an Apigee OPDK service for demos and POCs
+##  Email: chrispage@google.com
+##  Details: http://docker.apigee.net/apigee-edge-aio
+##
+################################################################################
+version: "3"
+services:
+  edge-aio:
+    # specify an image version or 'latest'
+    image: docker.apigee.net/apigee-edge-aio:latest
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+      - "8080:8080"
+      - "8079:8079"
+      - "3000:3000"
+      - "3001:3001"
+      - "9090:9090"
+      - "9099:9099"
+    volumes:
+      - ./license:/opt/apigee/license
+      # uncomment if you need persistent data
+      - ./customer:/opt/apigee/customer
+      - ./data:/opt/apigee/data
+      - ./log:/opt/apigee/var/log
+    networks:
+      - edge
+networks:
+  edge:

@@ -1,0 +1,129 @@
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: apigee-license
+data:
+  apigee-license.txt: JakHrOe9fuHhHyJzxqJ5uXlQrzk/vo/PaJpEg/NXN1kKKGQuBkv0o1BVnoRsGlMMxGK3DmShvQlFFHYWJIqCcJ2woZn3TfuFf0t7LSmWSoPxpPRUVM7NS3mXv3UtVp5XjFajEiByyGaejNrShgOiKmveJkczmcWq3g9UbfeIjhxTVpuh4fgzHOeUoPGg/gzlgYlAaU7MgNKonGKIYq23huUBYfiIB6ZoLjwy+EBBLLYmf38Gw1gxdjtbcxpAfVgVykecudT60zaqD1iUJxluJYF8NtiKkIvW01Oa6PZcuaWZql8UV6KicnWnZJZzdLhTZskwz+DqcwNf0R1+UaFaPg==
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: apigee
+  labels:
+    app: apigee
+spec:
+  ports:
+  - name: admin-http
+    protocol: TCP
+    port: 9000
+    targetPort: 9000
+  - name: api-http
+    protocol: TCP
+    port: 9001
+    targetPort: 9001
+  - name: management-http
+    protocol: TCP
+    port: 8080
+    targetPort: 8080
+  - name: developer-http
+    protocol: TCP
+    port: 8079
+    targetPort: 8079
+  - name: monitoring-http
+    protocol: TCP
+    port: 3000
+    targetPort: 3000
+  selector:
+    app: apigee
+  type: LoadBalancer
+  sessionAffinity: None
+
+---
+
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: apigee
+  labels:
+    app: apigee
+  annotations:
+    deployment.kubernetes.io/revision: 1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apigee
+  template:
+    metadata:
+      creationTimestamp: 
+      labels:
+        app: apigee
+    spec:
+      volumes:
+      - name: empty-dir
+        emptyDir: {}
+      - name: apigee-data
+        emptyDir: {}
+      - name: apigee-customer
+        emptyDir: {}
+      - name: apigee-license
+        configMap:
+          name: apigee-license
+          items:
+          - key: apigee-license.txt
+            path: license.txt
+          defaultMode: 420
+      containers:
+      - name: apigee
+        image: docker.apigee.net/apigee-edge-aio:latest
+        ports:
+        - containerPort: 9000
+          name: admin-http
+        - containerPort: 8080
+          name: management-http
+        - containerPort: 9001
+          name: api-http
+        - containerPort: 3000
+          name: monitoring-http
+        - containerPort: 8079
+          name: developer-http
+        resources: 
+          limits:
+            memory: "6144Mi"
+            cpu: "2"
+          requests:
+            memory: "6144Mi"
+            cpu: "1"
+        volumeMounts:
+        - name: apigee-data
+          mountPath: "/opt/apigee/data"
+        - name: apigee-customer
+          mountPath: "/opt/apigee/customer"
+        - name: apigee-license
+          mountPath: "/opt/apigee/license"
+        terminationMessagePath: "/dev/termination-log"
+        terminationMessagePolicy: File
+        imagePullPolicy: Always
+        securityContext:
+          privileged: true
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext:
+        fsGroup: 998
+      schedulerName: default-scheduler
+      imagePullSecrets:
+      - name: apigeesecret
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+
+
+---
+

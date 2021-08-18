@@ -1,0 +1,5 @@
+[apigee-internal-idp]
+name = Apigee  Custom Repo
+baseurl = https://raw.githubusercontent.com/rajeshm7910/apigee-internal-idp/master/dist/1.0.0
+enabled = 1
+gpgcheck = 0

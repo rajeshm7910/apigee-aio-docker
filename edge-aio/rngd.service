@@ -1,0 +1,6 @@
+[Unit]
+Description=Hardware RNG Entropy Gatherer Daemon
+[Service]
+ExecStart=/sbin/rngd -f -r /dev/urandom
+[Install]
+WantedBy=multi-user.target

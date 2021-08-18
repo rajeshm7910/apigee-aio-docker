@@ -1,0 +1,1 @@
+docker run --name apigee-edge-mirror -d -p 3939:3939 -P -it apigee-edge-mirror:$1

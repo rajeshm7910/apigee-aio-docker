@@ -1,0 +1,38 @@
+#Public hostname of IDP hostname
+APIGEE_PASSWORD=Secret123
+MANAGEMENT_UI_PUBLIC_IP=localhost
+EDGE_UE_URL=http://${MANAGEMENT_UI_PUBLIC_IP}:3001
+#Points to LDAP Host that gets installed with Apigee. In case of external ldap it should point to external ldap. In case its aio setup its localhost
+LDAP_HOSTNAME=localhost
+LDAP_PORT=10389
+
+#IDP Settings
+#IDP needs to be setup on https. It can be setup as standalone tomcat or behind loadbalancer. Even when tomcat is behind loadbalancer, tomcat needs to be set up with ssl.
+
+IDP_PUBLIC_URL_HOSTNAME=localhost
+IDP_PUBLIC_URL_SCHEME=https
+
+#SSL_TERMINATION configuration means SSL is setup in Standalone Tomcat.
+
+IDP_TOMCAT_PROFILE=SSL_TERMINATION
+IDP_PUBLIC_URL_PORT=9090
+
+#SSL_PROXY configuration means Load balancer in front of Tomcat.
+
+#IDP_TOMCAT_PROFILE=SSL_PROXY
+#IDP_PUBLIC_URL_PORT=443
+#IDP_PROXY_PORT=443
+
+IDP_TOMCAT_PORT=9090
+
+# Specify the path to the keystore file.
+IDP_TOMCAT_KEYSTORE_FILEPATH=/opt/apigee/customer/application/apigee-internal-idp/tomcat-ssl/cert.jks
+IDP_TOMCAT_KEYSTORE_ALIAS=idp
+# The password specified when you created the keystore.
+IDP_TOMCAT_KEYSTORE_PASSWORD=Secret123
+
+#These are shibboleth Settings required for backchannel communications.
+IDP_SEALER_PASSWORD=Secret123
+IDP_KEYSTORE_PASSWORD=Secret123
+IDP_SEALER_KEYPASSWORD=Secret123
+IDP_SEALER_STOREPASSWORD=Secret123

@@ -1,0 +1,65 @@
+IP1=localhost
+IP2=localhost
+HOSTIP=localhost
+
+## Management Server configuration.
+MSIP=$IP1
+MGMT_PORT=8080
+# Edge sys admin username and password as set when you installed Edge.
+ADMIN_EMAIL=trial@apigee.com
+APIGEE_ADMINPW=Secret123
+# Set the protocol for the Edge management API. Default is http. 
+# Set to https if you enabled TLS on the management API.
+MS_SCHEME=http
+
+## Postgres configuration. 
+PG_HOST=$IP1
+PG_PORT=5432
+# Postgres username and password as set when you installed Edge.
+PG_USER=apigee
+PG_PWD=postgres
+
+# apigee-sso configuration.
+SSO_PROFILE="saml"
+# Externally accessible IP or DNS name of apigee-sso.
+SSO_PUBLIC_URL_HOSTNAME=$IP2
+# Default port is 9099. If changing, set both properties to the same value.
+SSO_PUBLIC_URL_PORT=9099
+SSO_TOMCAT_PORT=9099
+# Set Tomcat TLS mode to DEFAULT to use HTTP access to apigee-sso.
+SSO_TOMCAT_PROFILE=DEFAULT
+SSO_PUBLIC_URL_SCHEME=http
+
+# SSO admin user name. The default is ssoadmin.
+SSO_ADMIN_NAME=ssoadmin
+# SSO admin password using uppercase, lowercase, number, and special chars. 
+SSO_ADMIN_SECRET=Secret123
+
+# Path to signing key and secret from "Create the TLS keys and certificates" above.
+SSO_JWT_SIGNINIG_KEY_FILEPATH=/opt/apigee/customer/application/apigee-sso/jwt-keys/privkey.pem
+SSO_JWT_VERIFICATION_KEY_FILEPATH=/opt/apigee/customer/application/apigee-sso/jwt-keys/pubkey.pem
+
+## LDAP Indirect Binding configuration
+# Insert this section into your base configuration file, as described previously.
+SSO_PROFILE="ldap"
+
+# Type of LDAP profile; in this case, "indirect"
+SSO_LDAP_PROFILE=indirect
+SSO_LDAP_BASE_URL=ldap://localhost:10389
+SSO_LDAP_ADMIN_USER_DN=uid=admin,ou=users,ou=global,dc=apigee,dc=com
+SSO_LDAP_ADMIN_PWD=Secret123
+SSO_LDAP_SEARCH_BASE=dc=apigee,dc=com
+SSO_LDAP_SEARCH_FILTER=mail={0}
+SSO_LDAP_MAIL_ATTRIBUTE=mail
+
+
+# Must configure an SMTP server so Edge SSO can send emails to users.
+SKIP_SMTP=n
+SMTPHOST=smtp.gmail.com
+SMTPUSER=xyz@gmail.com
+# 0 for no username
+SMTPPASSWORD=usdsfdf
+# 0 for no password
+SMTPSSL=y
+SMTPPORT=465
+SMTPMAILFROM=noreply@apigee.com

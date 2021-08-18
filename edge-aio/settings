@@ -1,0 +1,17 @@
+APPLICATION_EXE=$COMPONENT_ROOT/bin/enterpriseui
+
+[ -f "$COMPONENT_ROOT/conf/memory_settings.sh" ] && source "$COMPONENT_ROOT/conf/memory_settings.sh"
+
+[ -n $max_mem ] && JAVA_OPTS="-Xmx$max_mem"
+[ -n $min_mem ] && JAVA_OPTS="$JAVA_OPTS -Xms$min_mem"
+
+JAVA_OPTS="$JAVA_OPTS -Dhttp.port=9098 -Djavax.xml.stream.XMLInputFactory=utils.SafeXMLInputFactory"
+
+export JAVA_OPTS
+
+[ -f "$COMPONENT_ROOT/conf/logger_settings.sh" ] && source "$COMPONENT_ROOT/conf/logger_settings.sh"
+
+[ -n $PLAY_LOG_LEVEL ] && export PLAY_LOG_LEVEL
+[ -n $APPLICATION_LOG_LEVEL ] && export APPLICATION_LOG_LEVEL
+
+EXTRA_ARGS="-Dconfig.file=$COMPONENT_ROOT/conf/apigee.conf -Dpidfile.path=/dev/null -Dlogger.resource=prod-logback.xml $UI_OPTIONS"

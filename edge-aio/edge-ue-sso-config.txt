@@ -1,0 +1,117 @@
+# IP of the Edge Management Server.
+# This node also hosts the Edge SSO module and the current, or classic, Edge UI.
+IP1=localhost
+
+# IP of the New Edge experience node.
+IP2=localhost
+
+# Edge sys admin credentials.
+ADMIN_EMAIL=trial@apigee.com
+APIGEE_ADMINPW=Secret123
+
+# Edge Management Server information.
+APIGEE_PORT_HTTP_MS=8080
+MSIP=$IP1
+MS_SCHEME=http
+
+#
+# Shoehorn UI configuration.
+#
+
+# The first two properties use the same values as the New Edge experience.
+SHOEHORN_SCHEME=$MANAGEMENT_UI_SCHEME
+SHOEHORN_IP=$MANAGEMENT_UI_IP
+SHOEHORN_PORT=9098
+
+#
+# New Edge experience configuration.
+#
+
+# Enable the New Edge experience.
+EDGEUI_ENABLE_UNIFIED_UI=y
+# Specify IP and port for the New Edge experience.
+MANAGEMENT_UI_PORT=3001
+MANAGEMENT_UI_IP=$IP2
+# Specify a Private Cloud deployment.
+MANAGEMENT_UI_APP_ENV=OPDK
+# Disable TLS on the New Edge experience.
+# This release does not support TLS.
+MANAGEMENT_UI_SCHEME=http
+
+# Location of New Edge experience.
+MANAGEMENT_UI_PUBLIC_URIS=http://$IP2:3001
+MANAGEMENT_UI_SSO_REGISTERED_PUBLIC_URIS=$MANAGEMENT_UI_PUBLIC_URIS
+MANAGEMENT_UI_SSO_CSRF_SECRET=secret222
+MANAGEMENT_UI_SSO_CSRF_EXPIRATION_HOURS=24
+MANAGEMENT_UI_SSO_STRICT_TRANSPORT_SECURITY_AGE_HOURS=24
+MANAGEMENT_UI_SSO_PUBLIC_KEY_CACHE_HOURS=0.5
+
+# SSO configuration for the New Edge experience.
+MANAGEMENT_UI_SSO_ENABLED=y
+MANAGEMENT_UI_SSO_CLIENT_OVERWRITE=y
+MANAGEMENT_UI_SSO_CLIENT_ID=newueclient
+MANAGEMENT_UI_SSO_CLIENT_SECRET=secret111
+
+#
+# Edge Classic UI configuration.
+# Some settings are for the classic UI,
+# but are still required to configure the New Edge experience.
+#
+
+# These settings assume that Classic UI is installed on the Management Server.
+CLASSIC_UI_IP=$MSIP
+CLASSIC_UI_PORT=9098
+CLASSIC_UI_SCHEME=http
+EDGEUI_PUBLIC_URIS=$CLASSIC_UI_SCHEME://$CLASSIC_UI_IP:$CLASSIC_UI_PORT
+
+# Information about publicly accessible URL for Classic UI.
+EDGEUI_SSO_REGISTERD_PUBLIC_URIS=$EDGEUI_PUBLIC_URIS
+
+# Enable SSO.
+EDGEUI_SSO_ENABLED=y
+
+# The name of the OAuth client used to connect to apigee-sso. 
+# The default client name is edgeui.
+# Apigee recommends that you use the same settings as you used
+# when enabling SAML on the classic Edge UI.
+EDGEUI_SSO_CLIENT_NAME=edgeui
+# Oauth client password using uppercase, lowercase, number, and special chars. 
+EDGEUI_SSO_CLIENT_SECRET=ssoClient123
+# If set, existing EDGEUI client will deleted and new one will be created.
+EDGEUI_SSO_CLIENT_OVERWRITE=y
+
+# Information about Edge SSO module.
+# Externally accessible IP or DNS of Edge SSO module.
+SSO_PUBLIC_URL_HOSTNAME=$IP2
+SSO_PUBLIC_URL_PORT=9099
+# Default is http. Set to https if you enabled TLS on the Edge SSO module.
+# If Edge SSO uses a self-signed cert, you must also set MANAGEMENT_UI_SKIP_VERIFY to "y".
+SSO_PUBLIC_URL_SCHEME=http
+# MANAGEMENT_UI_SKIP_VERIFY=y
+# SSO admin credentials as set when you installed Edge SSO module.
+SSO_ADMIN_NAME=ssoadmin
+SSO_ADMIN_SECRET=Secret123
+
+# Type of LDAP profile; in this case, "indirect"
+SSO_LDAP_PROFILE=indirect
+SSO_LDAP_BASE_URL=ldap://localhost:10389
+SSO_LDAP_ADMIN_USER_DN=uid=admin,ou=users,ou=global,dc=apigee,dc=com
+SSO_LDAP_ADMIN_PWD=Secret123
+SSO_LDAP_SEARCH_BASE=dc=apigee,dc=com
+SSO_LDAP_SEARCH_FILTER=mail={0}
+SSO_LDAP_MAIL_ATTRIBUTE=mail
+
+
+#
+# Required SMTP information.
+#
+
+SKIP_SMTP=n
+SMTPHOST=smtp.gmail.com
+SMTPUSER=xyz@gmail.com
+# 0 for no username
+SMTPPASSWORD=password
+# 0 for no password
+SMTPSSL=y
+SMTPPORT=465
+SMTPMAILFROM=noreply@apigee.com
